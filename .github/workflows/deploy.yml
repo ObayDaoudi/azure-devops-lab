@@ -1,3 +1,5 @@
+cd ~/azure-devops-lab
+
 cat > .github/workflows/deploy.yml << 'EOF'
 name: Terraform CI/CD
 
