@@ -8,10 +8,10 @@ Built as a hands-on lab to practice cloud infrastructure automation on Azure.
 
 ## Stack
 
-- **Terraform** — infrastructure provisioning
-- **Ansible** — VM configuration and hardening
-- **GitHub Actions** — CI/CD pipeline
-- **Azure** — cloud provider (France Central)
+- **Terraform**, infrastructure provisioning
+- **Ansible**, VM configuration and hardening
+- **GitHub Actions**, CI/CD pipeline
+- **Azure**, cloud provider (France Central)
 
 ---
 
@@ -32,8 +32,8 @@ Built as a hands-on lab to practice cloud infrastructure automation on Azure.
 - System updates and essential packages
 - SSH hardening (root login disabled, password auth disabled)
 - UFW firewall rules
-- Prometheus — installed as a systemd service
-- Grafana — installed and enabled
+- Prometheus, installed as a systemd service
+- Grafana, installed and enabled
 
 ---
 
@@ -41,11 +41,11 @@ Built as a hands-on lab to practice cloud infrastructure automation on Azure.
 
 The GitHub Actions workflow triggers on any push or PR that touches `terraform/`:
 
-- **Terraform Format Check** — enforces consistent code style
-- **Terraform Init** — initializes with remote backend
-- **Terraform Validate** — checks configuration is syntactically valid
-- **Terraform Plan** — runs when Azure credentials are available (on merge to main)
-- **Terraform Apply** — applies approved plan to Azure
+- **Terraform Format Check**, enforces consistent code style
+- **Terraform Init**, initializes with remote backend
+- **Terraform Validate**, checks configuration is syntactically valid
+- **Terraform Plan**, runs when Azure credentials are available (on merge to main)
+- **Terraform Apply**, applies approved plan to Azure
 
 ---
 
@@ -85,16 +85,9 @@ terraform destroy -var-file="terraform.tfvars"
 
 This was built on an Azure for Students subscription, which came with a few real constraints worth documenting:
 
-- **Region policy** — deployment restricted to 5 regions (francecentral, swedencentral, uaenorth, austriaeast, spaincentral). Discovered via `az policy assignment list` and worked around by targeting France Central.
-- **Basic SKU public IPs** — quota set to 0. Switched to Standard SKU which is the recommended practice anyway.
-- **VM capacity** — B-series VMs unavailable across all allowed regions at time of deployment. Infrastructure (networking, NSG, public IP) was successfully provisioned; VM deployment is configured and ready once quota is available.
-- **App registration permissions** — service principal creation blocked, preventing full GitHub Actions integration. Pipeline is structured to run validate/format checks without credentials, and plan/apply when a service principal is available.
+- **Region policy**, deployment restricted to 5 regions (francecentral, swedencentral, uaenorth, austriaeast, spaincentral). Discovered via `az policy assignment list` and worked around by targeting France Central.
+- **Basic SKU public IPs**, quota set to 0. Switched to Standard SKU which is the recommended practice anyway.
+- **VM capacity**, B-series VMs unavailable across all allowed regions at time of deployment. Infrastructure (networking, NSG, public IP) was successfully provisioned; VM deployment is configured and ready once quota is available.
+- **App registration permissions**, service principal creation blocked, preventing full GitHub Actions integration. Pipeline is structured to run validate/format checks without credentials, and plan/apply when a service principal is available.
 
-These constraints are typical in restricted cloud environments and the workarounds reflect real-world troubleshooting.
-
----
-
-## Author
-
-Obay — MSc Computer Science student, Széchenyi István University
-ENDOFFILE
+These constraints are typical in restricted cloud environments and the workarounds reflect real world troubleshooting.
